@@ -15,22 +15,25 @@ app.use((req, res, next) => {
     next()
 })
 
-// ================================
+// =============== cookie =================
 
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
 app.get("/api/getcookie", (req, res) => {
-    res.cookie("connectTime", Date.now(), { maxAge: 3600 * 1000 })
+    res.cookie("sessionId", Date.now(), { maxAge: 3600 * 1000 })
     res.send("Cookie set")
 })
 
 app.get("/api/checkcookie", (req, res) => {
-    const cookie = req.cookies["connectTime"]
+    const cookie = req.cookies["sessionId"]
     res.send(`Your cookie: ${cookie}`)
 })
 
+// =============== XSS =================
+
 app.get("/api/remarks", (req, res) => {
+    console.log("=> received remark:", req.query.text)
     const date = (new Date()).toISOString()
     const formattedDate = date.split(".")[0].replace("T", " ")
     res.json([
@@ -41,6 +44,22 @@ app.get("/api/remarks", (req, res) => {
     ])
 })
 
+// =============== CSRF =================
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.post("/api/remarks", (req, res) => {
+    console.log("=> received post:", req.body.text)
+    const cookie = req.cookies["sessionId"]
+    if (cookie) {
+        res.send("CSRF réussi")
+    }
+    else {
+        res.send("CSRF échoué")
+    }
+})
+
 // ================================
 
 app.get('/', (req, res) => {
@@ -48,6 +67,6 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`\nExample app listening on port ${port}\n`)
 })
 
