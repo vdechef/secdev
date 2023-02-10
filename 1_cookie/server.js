@@ -17,11 +17,12 @@ app.use((req, res, next) => {
 
 // =============== cookie =================
 
+const uuid = require("uuid").v4
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
 app.get("/api/getcookie", (req, res) => {
-    res.cookie("sessionId", Date.now(), { maxAge: 3600 * 1000 })
+    res.cookie("sessionId", uuid(), { maxAge: 3600 * 1000 })
     res.send("Cookie set")
 })
 
