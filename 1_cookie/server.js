@@ -34,7 +34,12 @@ app.get("/api/checkcookie", (req, res) => {
 // ================================
 
 app.get('/', (req, res) => {
-    res.send("<p>Use /api/getcookie to get a cookie</p> <p>Use /api/checkcookie to see if the cookie is set</p>")
+    res.send(`
+        <br>
+        <p>Use <a href="/api/getcookie">/api/getcookie</a> to get a cookie</p> 
+        <br>
+        <p>Use <a href="/api/checkcookie">/api/checkcookie</a> to see if the cookie is set</p> 
+    `)
 })
 
 app.listen(port, () => {

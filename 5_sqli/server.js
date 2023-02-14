@@ -55,7 +55,10 @@ app.get('/api/getdata', async (req, res) => {
 // ================================
 
 app.get('/', (req, res) => {
-    res.send("<p>Use /api/getdata?search=<nom> to retrieve user data</p>")
+    res.send(`
+        <br>
+        <p>Use <a href="/api/getdata?search=al">/api/getdata?search=&lt;value to search&gt;</a> to retrieve user data</p>
+    `)
 })
 
 const server = app.listen(port, async () => {

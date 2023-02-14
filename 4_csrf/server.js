@@ -31,20 +31,6 @@ app.get("/api/checkcookie", (req, res) => {
     res.send(`Your cookie: ${cookie}`)
 })
 
-// =============== XSS =================
-
-app.get("/api/remarks", (req, res) => {
-    console.log("=> received remark:", req.query.text)
-    const date = (new Date()).toISOString()
-    const formattedDate = date.split(".")[0].replace("T", " ")
-    res.json([
-        {
-            date: formattedDate,
-            message: req.query.text
-        }
-    ])
-})
-
 // =============== CSRF =================
 
 app.use(express.json())
@@ -54,17 +40,26 @@ app.post("/api/remarks", (req, res) => {
     console.log("=> received post:", req.body.text)
     const cookie = req.cookies["sessionId"]
     if (cookie) {
-        res.send("CSRF réussi")
+        res.send(`CSRF réussi : le cookie 'sessionId' a bien été reçu par le serveur (${cookie})`)
     }
     else {
-        res.send("CSRF échoué")
+        res.send("CSRF échoué : le cookie 'sessionId' n'a pas été transmis au serveur")
     }
 })
 
 // ================================
 
 app.get('/', (req, res) => {
-    res.send("<p>Use /api/getcookie to get a cookie</p> <p>Use /api/checkcookie to see if the cookie is set</p>")
+    res.send(`
+        <br>
+        <p>Use <a href="/api/getcookie">/api/getcookie</a> to get a cookie</p> 
+        <br>
+        <p>Use <a href="/api/checkcookie">/api/checkcookie</a> to see if the cookie is set</p> 
+        <br>
+        <p>Use <a href="/csrf.html">/csrf.html</a> to check that cookie is transmitted from a trusted domain</p>
+        <br>
+        <p>Copy csrf.html content on <a href="https://codepen.io/tinymce/pen/QWNpjbg">https://codepen.io/tinymce/pen/QWNpjbg</a> to test the real CSRF attack</p> 
+    `)
 })
 
 app.listen(port, () => {

@@ -1,6 +1,6 @@
 <template>
     <div class="greetings">
-
+        <p class="disclaimer"><i>NB: pensez à lancer le serveur de l'exercice 2-vanilla-xss en même temps que celui-ci</i></p>
         <!-- Une image masquée<img src="" onerror="alert('Ceci peut être dangereux')" /> -->
         <p>N'hésitez pas à nous envoyer vos suggestions d'amélioration</p>
         <textarea v-model="text" rows="5" cols="120"></textarea>
@@ -45,6 +45,11 @@ export default defineComponent({
 .greetings h1,
 .greetings h3 {
     text-align: center;
+}
+.disclaimer {
+    position: fixed;
+    top: 30px;
+    margin: auto;
 }
 
 @media (min-width: 1024px) {
