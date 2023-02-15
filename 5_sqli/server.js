@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 // Pour installer et initialiser docker avant de lancer l'exercice :
 //      docker run --detach --name sqlidb -p 5000:3306 --env MARIADB_USER=mdbuser --env MARIADB_PASSWORD=mdbpassword --env MARIADB_ROOT_PASSWORD=mdbroot  mariadb:latest
-//      docker exec -i sqlidb mysql -u root -pmdbroot < echo "CREATE DATABASE sqlidb;"
+//      docker exec -i sqlidb mysql -u root -pmdbroot < init.sql
 
 const mysql = require('promise-mysql')
 let db = null
