@@ -58,7 +58,7 @@ function errorHandler(err, res) {
     if (err instanceof ForbiddenValueError) {
         console.error("Erreur valeur interdite", err.message)
         console.log("Erreur valeur interdite (details)", err.stack)
-        res.status(500).send("Erreur valeur interdite: " + err.message)
+        res.status(400).send("Erreur valeur interdite: " + err.message)
     }
     else if (err instanceof AuthenticationError) {
         console.error("Erreur d'authentification", err.message)
