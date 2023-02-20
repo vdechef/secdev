@@ -1,0 +1,17 @@
+body {
+    height: 100%;
+    width: 50%;
+    margin: auto;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+button {
+    height: 50px;
+}
+table {
+    margin-top: 50px;
+}
+td:first-child {
+    width: 100px;
+}

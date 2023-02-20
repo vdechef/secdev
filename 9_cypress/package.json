@@ -1,0 +1,20 @@
+{
+  "name": "secdev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "supervisor server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "supervisor": "^0.12.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "cypress": "^12.6.0"
+  }
+}

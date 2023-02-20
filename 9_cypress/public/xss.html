@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="xss.css"></link>
+
+
+    <script>
+        function onButtonClick() {
+            const text = document.getElementById("saisie").value
+            axios.get(`/api/remarks?text=${text}`).then(response => {
+                displayRemarks(response.data)
+            })
+        }
+        function displayRemarks(remarks) {
+            const list = document.getElementById("liste")
+            
+            for (const remark of remarks) {
+                const row = document.createElement("tr")
+                row.setAttribute("data-cy", "rowMessage")
+                list.appendChild(row)
+
+                const col1 = document.createElement("td")
+                row.appendChild(col1)
+                col1.innerHTML = remark.date.split(" ")[1]
+
+                const col2 = document.createElement("td")
+                row.appendChild(col2)
+                col2.innerHTML = remark.message
+            }
+        }
+    </script>
+
+</head>
+
+
+<body>
+    <!-- Une image masquée<img src="" onerror="alert('Ceci peut être dangereux')" /> -->
+    <p>N'hésitez pas à nous envoyer vos suggestions d'amélioration</p>
+    <textarea id="saisie" rows="5" cols="120"></textarea>
+    <button onclick="onButtonClick()">Envoyer</button>
+
+    <table id="liste"></table>
+
+</body>
+
+</html>
