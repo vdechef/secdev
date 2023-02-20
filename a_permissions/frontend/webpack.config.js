@@ -50,15 +50,11 @@ module.exports = {
         historyApiFallback: true,
         port: 4000,
         proxy: {
-            '/users*': {
-                target: 'http://localhost:3000'
+            '/users': {
+                target: 'http://localhost:3000',
+                secure: false,
+                changeOrigin: true
             }
          }
-    },
-    externals: {
-        // global app config object
-        config: JSON.stringify({
-            apiUrl: 'http://localhost:4000'
-        })
     }
 }
