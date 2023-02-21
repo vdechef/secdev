@@ -7,7 +7,7 @@ describe("Get Endpoints", () => {
         cy.get("[data-cy='xssPage']").click()
 
         // find textarea and set text into it
-        cy.get("textarea").type("mon texte")
+        cy.get("#saisie").type("mon texte")
         // click on button to send
         cy.contains("Envoyer").click()
         // check that message is displayed

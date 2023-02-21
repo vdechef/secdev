@@ -1,14 +1,11 @@
 const jwt = require('express-jwt');
 const { secret } = require('config.json');
+const Role = require('./role');
+const Permission = require('./permission');
 
 module.exports = authorize;
 
-function authorize(roles = []) {
-    // roles param can be a single role string (e.g. Role.User or 'User') 
-    // or an array of roles (e.g. [Role.Admin, Role.User] or ['Admin', 'User'])
-    if (typeof roles === 'string') {
-        roles = [roles];
-    }
+function authorize(permission) {
 
     return [
         // authenticate JWT token and attach user to request object (req.user)
@@ -16,13 +13,27 @@ function authorize(roles = []) {
 
         // authorize based on user role
         (req, res, next) => {
-            if (roles.length && !roles.includes(req.user.role)) {
+            let isAuthorized = false
+            if (permission === Permission.FREE_ACCESS) {
+                // route without permission => allow every authenticated users
+                isAuthorized = true
+            }
+            else if (req.user.role) {
+                // retrieve permissions for role
+                const role = Role[req.user.role]
+                if (role && role.permissions.includes(permission)) {
+                    isAuthorized = true
+                }
+            }
+            if (!isAuthorized) {
                 // user's role is not authorized
                 return res.status(401).json({ message: 'Unauthorized' });
             }
+            else {
+                // authentication and authorization successful
+                next();
+            }
 
-            // authentication and authorization successful
-            next();
         }
     ];
 }

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "supervisor server.js"
+    "dev": "supervisor server.js",
+    "test": "cypress open"
   },
   "author": "",
   "license": "ISC",

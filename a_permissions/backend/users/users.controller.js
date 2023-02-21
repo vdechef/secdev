@@ -2,12 +2,13 @@
 const router = express.Router();
 const userService = require('./user.service');
 const authorize = require('_helpers/authorize')
+const Permission = require('_helpers/permission');
 const Role = require('_helpers/role');
 
 // routes
 router.post('/authenticate', authenticate);     // public route
-router.get('/', authorize(Role.Admin), getAll); // admin only
-router.get('/:id', authorize(), getById);       // all authenticated users
+router.get('/', authorize(Permission.LIST_USERS), getAll); // admin only
+router.get('/:id', authorize(Permission.VIEW_PROFILE), getById);       // all authenticated users
 module.exports = router;
 
 function authenticate(req, res, next) {
@@ -23,12 +24,15 @@ function getAll(req, res, next) {
 }
 
 function getById(req, res, next) {
-    const currentUser = req.user;
+    const currentUserId = req.user.sub;
     const id = parseInt(req.params.id);
 
-    // only allow admins to access other user records
-    if (id !== currentUser.sub && currentUser.role !== Role.Admin) {
-        return res.status(401).json({ message: 'Unauthorized' });
+    // only allow users with LIST_USERS permission to access other users records
+    if (id !== currentUserId) {
+        const role = Role[req.user.role]
+        if (!role || !role.permissions.includes(Permission.LIST_USERS)) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
     }
 
     userService.getById(req.params.id)
