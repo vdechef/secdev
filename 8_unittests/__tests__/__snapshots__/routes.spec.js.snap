@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Endpoints Error handling should return dedicated message for toto 1`] = `"Erreur valeur interdite: Toto n'a pas de baskettes"`;
+
+exports[`Endpoints Error handling should return dedicated message when forbidden 1`] = `"Erreur inconnue"`;
+
+exports[`Endpoints Error handling should return generic message on SQL error 1`] = `"Erreur générique pour éviter a fuite de données"`;
+
+exports[`Endpoints Get should filter using search param 1`] = `
+[
+  {
+    "age": 45,
+    "id": 1,
+    "name": "Alexandre Astier",
+  },
+  {
+    "age": 62,
+    "id": 3,
+    "name": "Alain Chabat",
+  },
+]
+`;
+
+exports[`Endpoints Get should return all users when no search string provided 1`] = `
+[
+  {
+    "age": 45,
+    "id": 1,
+    "name": "Alexandre Astier",
+  },
+  {
+    "age": 128,
+    "id": 2,
+    "name": "Louis Debroglie",
+  },
+  {
+    "age": 62,
+    "id": 3,
+    "name": "Alain Chabat",
+  },
+  {
+    "age": 35,
+    "id": 4,
+    "name": "Lord Farquaad ",
+  },
+  {
+    "age": 35,
+    "id": 5,
+    "name": "Pierre d'Argoeuvre ",
+  },
+]
+`;
+
+exports[`Endpoints Get should return home page 1`] = `{}`;

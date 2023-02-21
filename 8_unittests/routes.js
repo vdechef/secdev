@@ -38,6 +38,8 @@ async function disconnectMysql() {
 
 // =============== error handling =================
 
+const logger = require("./logger.js")
+
 class ForbiddenValueError extends Error {
     constructor(message) {
         super(message)
@@ -51,22 +53,22 @@ class AuthenticationError extends Error {
 
 function errorHandler(err, res) {
     if (err instanceof ForbiddenValueError) {
-        console.error("Erreur valeur interdite", err.message)
-        console.log("Erreur valeur interdite (details)", err.stack)
+        logger.error("Erreur valeur interdite", err.message)
+        logger.log("Erreur valeur interdite (details)", err.stack)
         res.status(400).send("Erreur valeur interdite: " + err.message)
     }
     else if (err instanceof AuthenticationError) {
-        console.error("Erreur d'authentification", err.message)
+        logger.error("Erreur d'authentification", err.message)
         res.status(401).send("Utilisateur non connecté")
     }
     else if (err.sql) {
-        console.error("Erreur sql", err.sqlMessage)
-        console.log("Erreur sql (details)", err.sql)
+        logger.error("Erreur sql", err.sqlMessage)
+        logger.log("Erreur sql (details)", err.sql)
         res.status(500).send("Erreur générique pour éviter a fuite de données")
     }
     else {
-        console.error("Erreur inconnue", err.message)
-        console.log("Erreur inconnue details", err.stack)
+        logger.error("Erreur inconnue", err.message)
+        logger.log("Erreur inconnue details", err.stack)
         res.status(500).send("Erreur inconnue")
     }
 }
